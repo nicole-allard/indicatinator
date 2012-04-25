@@ -44,27 +44,28 @@ void startupSequence() {
     pinMode(FIRST_LED_PIN + i, OUTPUT);
   }
   
-  calculateExternals(float(0));
-  delay(1000);
-  for (int i = 0; i <= 100; i++) {
-    calculateExternals(float(i));
-    unsigned long endTime = millis() + 15;
-    while (millis() < endTime) {
-      updateLEDs(); 
-    }
-  }
-  for (int i = 180; i >= 0; i--) {
-    calculateExternals(float(i));
-    unsigned long endTime = millis() + 15;
-    while (millis() < endTime) {
-      updateLEDs(); 
-    }
-  }
+//  calculateExternals(float(0));
+//  delay(1000);
+//  for (int i = 0; i <= 100; i++) {
+//    calculateExternals(float(i));
+//    unsigned long endTime = millis() + 15;
+//    while (millis() < endTime) {
+//      updateLEDs(); 
+//    }
+//  }
+//  for (int i = 180; i >= 0; i--) {
+//    calculateExternals(float(i));
+//    unsigned long endTime = millis() + 15;
+//    while (millis() < endTime) {
+//      updateLEDs(); 
+//    }
+//  }
 }
 
 void loop() {
   if (Serial.available()) {
-    parseInput();
+//    parseInput();
+    percent = Serial.read();
     calculateExternals(percent);
   }
   
