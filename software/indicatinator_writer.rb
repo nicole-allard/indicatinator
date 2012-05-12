@@ -2,7 +2,8 @@ require 'rubygems'
 require 'serialport'
 
 #params for serial port  
-port_str = "/dev/tty.usbmodemfa131"
+port_str = "/dev/ttyACM0"
+#port_str = "/dev/tty.usbmodemfa131"
 baud_rate = 9600
 data_bits = 8 
 stop_bits = 1 
