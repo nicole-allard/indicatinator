@@ -5,8 +5,8 @@ chr() {
   printf \\$(printf '%03o' $1)
 }
 
-MIN_RATE=20000000
-MAX_RATE=40000000
+MIN_RATE=39500000
+MAX_RATE=60000000
 
 user="readleaf"
 pw=`cat ramp_rate_pw`

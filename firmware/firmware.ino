@@ -8,7 +8,6 @@
 
 Servo servo1;
 
-int servoDegrees = 0;
 float percent = 0;
 
 int numLedsLit = 0;
@@ -19,7 +18,6 @@ void setup() {
   servo1.attach(9);
   Serial.begin(9600);
   startupSequence();
-  servoDegrees = 0;
 }
 
 // Temporary input parsing for debugging
@@ -43,29 +41,39 @@ void startupSequence() {
   for (int i = 0; i < NUM_LEDS; i++) {
     pinMode(FIRST_LED_PIN + i, OUTPUT);
   }
-  
-//  calculateExternals(float(0));
-//  delay(1000);
-//  for (int i = 0; i <= 100; i++) {
-//    calculateExternals(float(i));
-//    unsigned long endTime = millis() + 15;
-//    while (millis() < endTime) {
-//      updateLEDs(); 
-//    }
-//  }
-//  for (int i = 180; i >= 0; i--) {
-//    calculateExternals(float(i));
-//    unsigned long endTime = millis() + 15;
-//    while (millis() < endTime) {
-//      updateLEDs(); 
-//    }
-//  }
+  calculateExternals(float(0));
+}
+
+// move pointer and lights from 0 to 180 to 0
+void fan() {
+  calculateExternals(float(0));
+  delay(1000);
+  for (int i = 0; i <= 100; i++) {
+    calculateExternals(float(i));
+    unsigned long endTime = millis() + 15;
+    while (millis() < endTime) {
+      updateLEDs(); 
+    }
+  }
+  for (int i = 180; i >= 0; i--) {
+    calculateExternals(float(i));
+    unsigned long endTime = millis() + 15;
+    while (millis() < endTime) {
+      updateLEDs(); 
+    }
+  }
 }
 
 void loop() {
   if (Serial.available()) {
 //    parseInput();
-    percent = Serial.read();
+    int input = Serial.read();
+    if (input == 101) {
+      fan();
+      return;
+    }
+    
+    percent = input; 
     calculateExternals(percent);
   }
   
@@ -75,7 +83,7 @@ void loop() {
 void calculateExternals(float percent) {
   percent = percent/float(100);
   percent = min(1, max(0, percent));
-  servoDegrees = MAX_DEGREES - (percent * (MAX_DEGREES - MIN_DEGREES));
+  int servoDegrees = MAX_DEGREES - (percent * (MAX_DEGREES - MIN_DEGREES));
 
   numLedsLit = round(percent * float(NUM_LEDS));
   servo1.write(servoDegrees);
