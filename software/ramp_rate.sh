@@ -26,11 +26,12 @@ if [ -z "$rate" ]
 fi
 
 percent=$((($rate-$MIN_RATE)*100/($MAX_RATE-$MIN_RATE)))
+echo "$percent %"
 if [ $percent -lt 0 ]
 then
   percent=0
 fi
 #echo $percent
-byte=`chr $percent`
+#byte=`chr $percent`
 #echo "$byte"
-ruby indicatinator_writer.rb "$byte"
+ruby indicatinator_writer.rb $percent

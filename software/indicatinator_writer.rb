@@ -11,4 +11,4 @@ parity = SerialPort::NONE
 
 sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)  
 sleep(3)
-sp.write(ARGV[0] || 0.chr)
+sp.write(ARGV[0].to_i.chr || 0.chr)
